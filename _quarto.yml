@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Norkost"
+
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+
+      - href: norkost/index.qmd
+        text: Norkost
+
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+
+
+
