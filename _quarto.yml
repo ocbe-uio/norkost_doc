@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  render: 
+    - "*.qmd" # this must be here!
+    - "!notes_internal_norkost/"
 
 website:
   page-navigation: true
