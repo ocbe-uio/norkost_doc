@@ -1,0 +1,27 @@
+---
+title: "Use Posit Cloud"
+description: How to access the cloud environment
+format: 
+  html:
+    code-fold: false
+    code-tools: false
+    code-annotations: select
+editor: source
+---
+
+
+Go to [Posit Cloud](https://posit.cloud),
+
+![](fig/cloud_1.png)
+
+
+If you already haven an account, click **Log In**. It will prompt you to log in either via email, or through other third party accounts like GitHub or Google Cloud. 
+
+Once you've logged in, you should see a panel like below.
+
+![](fig/cloud_2.png)
+
+If you click on **spade** project, you should be able to see a page like this:
+
+![](fig/cloud_3.png)
+

@@ -25,6 +25,13 @@
     "href": "norkost/index.html",
     "title": "Norkost",
     "section": "",
-    "text": "Norkost project notes\n\n\n\n\n\n\n\n\n\nTitle\n\n\n\n\n\n\nProblem\n\n\n\n\n\nNo matching items"
+    "text": "Norkost project notes\n\n\n\n\n\n\n\n\n\nTitle\n\n\n\n\n\n\nUse Posit Cloud\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "norkost/1_cloud.html",
+    "href": "norkost/1_cloud.html",
+    "title": "Use Posit Cloud",
+    "section": "",
+    "text": "Go to Posit Cloud,\n\nIf you already haven an account, click Log In. It will prompt you to log in either via email, or through other third party accounts like GitHub or Google Cloud.\nOnce you’ve logged in, you should see a panel like below.\n\nIf you click on spade project, you should be able to see a page like this:"
   }
 ]
