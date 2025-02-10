@@ -1,0 +1,168 @@
+---
+title: "SPADE"
+description: Use SPADE program
+format: 
+  html:
+    code-fold: false
+    code-tools: false
+    code-annotations: select
+editor: source
+---
+
+
+The `SPADE.RIVM` package is already downloaded and installed in the workspace. You need to load the package by using the following command every time you open a new Rstudio session.
+
+If there are problems using the package, please contact the Research Software Engineer at Biostatistics Department. 
+
+```{r}
+#| eval: false
+library(SPADE.RIVM)
+```
+
+
+### Load the data
+
+The data should be in the format expected by SPADE. The example below works; but if you have a new data set, you'll need to process it a bit so that it has the necessary columns. (Might be easier to do it inside Excel!)
+
+The column name `Nr` has been changed into `id`. 
+
+```{r}
+# load the library to read in the data
+library(readr)
+
+d <- read_csv("data/norkost4_spade.csv")
+head(d)
+
+# change the second column from Nr to id
+colnames(d)[2] <- 'id'
+colnames(d)
+```
+
+
+When it comes to **sex**, SPADE expects `1 = male`, `2 = female`. Double check how it is coded in your data: 
+
+```{r}
+d[1:6, c('sex', 'sexc')]
+```
+
+
+### (Optional) Define threshold
+
+This is only necessary if the percentage above (or below) a threshold needs to be computed.
+
+SPADE expects one threshold value per age, so you'll need to create a data like the one below. In case multiple foods are required, stack them by columns.
+
+In the following example, the thresholds for `whole_grain` and `fish` are the same for all ages. They can be different. It could be a good idea to create the data in Excel and then load the data directly into R.
+
+```{r}
+# range: ear (below this value)
+ref_ear <- data.frame(
+  age = seq(18, 80, by = 1),
+  # different foods
+  whole_grain = 90, 
+  fish = 20 
+)
+
+# print the first rows 
+head(ref_ear)
+```
+
+
+You can check how many rows from the data has `whole_grain` below 90, and also compute the percentage.
+
+```{r}
+
+sum(d$whole_grain < 90) # 3140 rows
+sum(d$whole_grain < 90)/nrow(d) # 80% below 90g
+```
+
+
+### Run SPADE (two parts)
+
+The following code runs for **two parts model** and **female**. See below for how to do it for **male** and **both**. Note that when specifying `frml.ia` and `frml.if`, please follow the SPADE manual.
+
+```{r}
+#| eval: false
+# spade (two parts) ----
+# two parts model needs to specify frml.ia and frml.if
+
+f.spade(
+  frml.ia = whole_grain ~ fp(age),   # <1>
+  frml.if = whole_grain ~ cs(age),   # <2>
+  prb = c(25, 50, 75, 95, 97.5)/100,  # <3>
+  data = d,  # <4>
+  min.age = 18,  # <5>
+  max.age = 80,  # <5>
+  sex.label = "female",   # <6>
+  seed = 29062020,  # <7>
+  EAR.names = 'ref_ear',  # <8>
+  # UL.names = 'ref_ul',
+  spade.output.path = "output_food"  # <9>
+)
+
+# find the results in folder output_food
+```
+1. `frml.ia`: needs to be the outcome (`whole_grain` in this example), as a function of age.
+2. `frml.if`: same as above
+3. `prb`: percentage of habitual intake. Here is how to set them to be 25%, 50%, 75%, 95% and 97.5%.
+4. `data`: the data `d` you've loaded before
+5. `min.age, max.age`: from 18 to 80. This needs to match the EAR thresholds.
+6. `sex.label`: either `female`, `male` or `both`. SPADE expects sex to be coded as 1 or 2 in the data, while here it is using `female` rather than code 2.
+7. `seed`: controls the reproducibility. You do not need to change this.
+8. `EAR.names`: the threshold data you've set up in the previous step. Can ignore if you do not need to compute the percentage above or below the threshold.
+9. `spade.output.path`: where to save the data. See the example in the next section.
+
+
+If you need other sex combinations, change `sex.label` while keeping everything else the same.
+
+```{r}
+#| eval: false
+# test if it differs for male
+f.spade(
+  frml.ia = whole_grain ~ fp(age),
+  frml.if = whole_grain ~ cs(age), 
+  prb = c(25, 50, 75, 95, 97.5)/100,
+  data = d,
+  min.age = 18,
+  max.age = 80,
+  sex.label = "male", 
+  seed = 29062020,
+  EAR.names = 'ref_ear',
+  # UL.names = 'ref_ul',
+  spade.output.path = "output_food"
+)
+
+# both gender
+f.spade(
+  frml.ia = whole_grain ~ fp(age), 
+  frml.if = whole_grain ~ cs(age), 
+  prb = c(25, 50, 75, 95, 97.5)/100,
+  data = d,
+  min.age = 18,
+  max.age = 80,
+  sex.label = "both", 
+  seed = 29062020,
+  EAR.names = 'ref_ear',
+  # UL.names = 'ref_ul',
+  spade.output.path = "output_food"
+)
+```
+
+
+### Results folder
+
+Once you've run the code above, the results are saved in the folder you've specified. Here it is `output_food`. We want to check the `excel_tables`.
+
+![](fig/run_1.png){width=60%}
+
+
+![](fig/run_2.png){width=60%}
+
+Inside this folder you'll see the results for the sex combinations you've done. Pay extra attention to the **time** when the files are created, as SPADE does not change the name of the file, so you might want to double check if you're using the most recent results.
+
+![](fig/run_3.png){width=60%}
+
+
+
+
+
