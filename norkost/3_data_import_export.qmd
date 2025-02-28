@@ -1,0 +1,40 @@
+---
+title: "Data Import Export"
+description: How to upload and download the data from local computer to the cloud
+format: 
+  html:
+    code-fold: false
+    code-tools: false
+    code-annotations: select
+editor: source
+---
+
+## Data import
+
+To import data, locate the **Upload** button. 
+
+![](fig/data_io_1.png){width=60%}
+
+Select the **Target directory**. This is going to be where your uploaded data will be. I suggest to upload them into a folder called **data**, but you can name it whatever you need.
+
+![](fig/data_io_2.png){width=60%}
+
+
+
+## Data export
+
+Once the analysis is finished, you can download the data from your result folder.
+First go to where the results are saved. 
+
+Select the data you want to save, then click the button on the top.
+
+![](fig/data_io_3.png){width=60%}
+
+This opens a list of options. Select **Export**:
+
+![](fig/data_io_4.png){width=60%}
+
+Now you can modify the name for the file, so that it downloads the file you need on your local computer.
+
+![](fig/data_io_5.png){width=60%}
+

@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Use SPADE program">
+<meta name="description" content="SPADE one-part and two-parts model">
 
-<title>Norkost - SPADE</title>
+<title>Norkost - Run SPADE on Posit Cloud</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -150,6 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link active" data-scroll-target="#load-the-data">Load the data</a></li>
   <li><a href="#optional-define-threshold" id="toc-optional-define-threshold" class="nav-link" data-scroll-target="#optional-define-threshold">(Optional) Define threshold</a></li>
   <li><a href="#run-spade-two-parts" id="toc-run-spade-two-parts" class="nav-link" data-scroll-target="#run-spade-two-parts">Run SPADE (two parts)</a></li>
+  <li><a href="#run-spade-one-part" id="toc-run-spade-one-part" class="nav-link" data-scroll-target="#run-spade-one-part">Run SPADE (one part)</a></li>
   <li><a href="#results-folder" id="toc-results-folder" class="nav-link" data-scroll-target="#results-folder">Results folder</a></li>
   </ul>
 </nav>
@@ -159,12 +160,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">SPADE</h1>
+<h1 class="title">Run SPADE on Posit Cloud</h1>
 </div>
 
 <div>
   <div class="description">
-    Use SPADE program
+    SPADE one-part and two-parts model
   </div>
 </div>
 
@@ -380,6 +381,26 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># UL.names = 'ref_ul',</span></span>
 <span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">spade.output.path =</span> <span class="st">"output_food"</span></span>
 <span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="run-spade-one-part" class="level3">
+<h3 class="anchored" data-anchor-id="run-spade-one-part">Run SPADE (one part)</h3>
+<p>Sometimes one-part model is more desirable, if intake frequency is not modeled.</p>
+<p>The set-up is very similar to two-parts model, however there is a difference in <code>frml.if</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f.spade</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">frml.ia =</span> Fullk <span class="sc">~</span> <span class="fu">fp</span>(age), <span class="co"># model for intake amounts,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">frml.if =</span> <span class="st">"no.if"</span>, <span class="co"># "no.if" = no zeroes, no intake frequencies</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">prb =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">95</span>, <span class="fl">97.5</span>)<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> d_nosup,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">min.age =</span> <span class="dv">18</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">max.age =</span> <span class="dv">80</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex.label =</span> <span class="st">"female"</span>, </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">29062020</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># EAR.names = 'ref_ear',</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># UL.names = 'ref_ul',</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">spade.output.path =</span> <span class="st">"output_nutrient_nosup"</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="results-folder" class="level3">

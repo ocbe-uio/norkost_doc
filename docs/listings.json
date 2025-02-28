@@ -3,7 +3,8 @@
     "listing": "/norkost/index.html",
     "items": [
       "/norkost/1_cloud.html",
-      "/norkost/2_spade.html"
+      "/norkost/2_spade.html",
+      "/norkost/3_data_import_export.html"
     ]
   }
 ]

@@ -1,6 +1,6 @@
 ---
-title: "SPADE"
-description: Use SPADE program
+title: "Run SPADE on Posit Cloud"
+description: SPADE one-part and two-parts model
 format: 
   html:
     code-fold: false
@@ -147,6 +147,32 @@ f.spade(
   spade.output.path = "output_food"
 )
 ```
+
+
+### Run SPADE (one part)
+
+Sometimes one-part model is more desirable, if intake frequency is not modeled. 
+
+The set-up is very similar to two-parts model, however there is a difference in `frml.if`. 
+
+```{r}
+#| eval: false
+
+f.spade(
+  frml.ia = Fullk ~ fp(age), # model for intake amounts,
+  frml.if = "no.if", # "no.if" = no zeroes, no intake frequencies
+  prb = c(25, 50, 75, 95, 97.5)/100,
+  data = d_nosup,
+  min.age = 18,
+  max.age = 80,
+  sex.label = "female", 
+  seed = 29062020,
+  # EAR.names = 'ref_ear',
+  # UL.names = 'ref_ul',
+  spade.output.path = "output_nutrient_nosup"
+)
+```
+
 
 
 ### Results folder

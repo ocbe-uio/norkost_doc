@@ -8,6 +8,7 @@ listing:
     contents: 
       - "1_cloud.qmd"
       - "2_spade.qmd"
+      - "3_data_import_export.qmd"
     type: table
     grid-item-border: false
     sort-ui: false
